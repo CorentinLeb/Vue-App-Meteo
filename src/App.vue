@@ -1,39 +1,30 @@
 <template>
-<div id="app">
-<main>
-  <div class="search-box">
-   <form class="search-location"
-   @submit.prevent="getWeather">
-   <div class="search-box">
-     <input 
-     type="text"
-     class="search-bar"
-     placeholder="Entrez le nom de la ville" 
-     v-model="citySearch" 
-     autocomplete="off"/>
-   </div>
-   </form>
-
-  <div class="weather-wrap" :class="isDay ? 'day' :'night'">
-       <div class="not-found" v-if="!searchResult">
-        <h3>City not found</h3>
+  <div id="app">
+    <main>
+      <div class="search-box">
+        <form class="search-location"
+        @submit.prevent="getWeather">
+          <div class="search-box">
+            <input 
+            type="text"
+            class="search-bar"
+            placeholder="Entrez le nom de la ville" 
+            v-model="citySearch" 
+            autocomplete="off"/>
+          </div>
+        </form>
       </div>
+
       <div class="location-box">
-        <header class="location" v-if="searchResult">
-        <h1>{{weather.cityName}}</h1>
-        <p> {{weather.country}}</p>
-      </header>
+          <h1 class="location">{{weather.cityName}}</h1>
+          <p> {{weather.country}}</p>
+        <div class="weather-box">
+          <h2 class="temp">{{weather.temperature}}°C</h2>
+          <p class="weather">{{weather.description}}</p>
+        </div>   
       </div>
-      
-      <section class="details" v-if="searchResult">
-        <h2>{{weather.temperature}}°C</h2>
-        <p>{{weather.description}}</p>
-      </section>
+    </main>
   </div>
-  </div>
-</main>
-</div>
-
 </template>
 
 
