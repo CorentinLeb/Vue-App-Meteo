@@ -1,4 +1,5 @@
 <template>
+<main>
   <div class="bgmeteo display">
    <img alt="Vue logo" src="./assets/cold-bg.webp">
    <form class="search-location"
@@ -19,6 +20,7 @@
       </section>
   </div>
   </div>
+</main>
 </template>
 
 
