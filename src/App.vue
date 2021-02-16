@@ -6,7 +6,8 @@
    @submit.prevent="getWeather">
    <div class="search-box">
      <input 
-     type="text" 
+     type="text"
+     class="search-bar"
      placeholder="Entrez le nom de la ville" 
      v-model="citySearch" 
      autocomplete="off"/>
