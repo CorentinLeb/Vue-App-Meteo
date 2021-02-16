@@ -1,7 +1,7 @@
 <template>
+<div id="app">
 <main>
-  <div class="bgmeteo display">
-   <img alt="Vue logo" src="./assets/cold-bg.webp">
+  <div class="search-box">
    <form class="search-location"
    @submit.prevent="getWeather">
    <div class="search-box">
@@ -31,6 +31,8 @@
   </div>
   </div>
 </main>
+</div>
+
 </template>
 
 
