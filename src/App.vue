@@ -4,16 +4,26 @@
    <img alt="Vue logo" src="./assets/cold-bg.webp">
    <form class="search-location"
    @submit.prevent="getWeather">
-    <input type="text" placeholder="Entrez le nom de la ville" v-model="citySearch" autocomplete="off"/>
+   <div class="search-box">
+     <input 
+     type="text" 
+     placeholder="Entrez le nom de la ville" 
+     v-model="citySearch" 
+     autocomplete="off"/>
+   </div>
    </form>
-  <div class="content" :class="isDay ? 'day' :'night'">
+
+  <div class="weather-wrap" :class="isDay ? 'day' :'night'">
        <div class="not-found" v-if="!searchResult">
-        <h3> City not found</h3>
+        <h3>City not found</h3>
       </div>
-      <header class="localisation-info" v-if="searchResult">
+      <div class="location-box">
+        <header class="location" v-if="searchResult">
         <h1>{{weather.cityName}}</h1>
         <p> {{weather.country}}</p>
       </header>
+      </div>
+      
       <section class="details" v-if="searchResult">
         <h2>{{weather.temperature}}°C</h2>
         <p>{{weather.description}}</p>
