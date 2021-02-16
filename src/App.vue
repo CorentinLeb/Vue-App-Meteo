@@ -41,10 +41,13 @@ export default {
   methods: {
     fetchWeather (e){
       if (e.key == "Enter") {
-        fetch (`${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`)
-        .then(res => {
-          return res.json();
-        }).then(this.setResults);
+        async function () {
+      console.log(this.citySearch);
+      const key = "xxxxxxxxxxxxxxxxxxx";
+      const callURL = `http://api.openweathermap.org/data/2.5/weather?q=${this.citySearch}&appid=${key}&units=metric`;
+      //? Appel à l'API avec un await
+        const response = await fetch(callURL);
+        const data = await response.json(response);
       }
     },
     setResults (results) {
