@@ -1,60 +1,76 @@
 <template>
-  <div id="app">
-    <main>
-      <div class="search-box">
-        <input 
-        type="text" 
-        class="search-bar" 
-        placeholder="Search..." 
-        v-model="query"
-        @keypress="fetchWeather"
-        />
+  <div class="bgmeteo display">
+   <img alt="Vue logo" src="./assets/cold-bg.webp">
+   <form class="search-location"
+   @submit.prevent="getWeather">
+    <input type="text" placeholder="Entrez le nom de la ville" v-model="citySearch" autocomplete="off"/>
+   </form>
+  <div class="content" :class="isDay ? 'day' :'night'">
+       <div class="not-found" v-if="!searchResult">
+        <h3> City not found</h3>
       </div>
-
-      <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
-        <div class="location-box">
-          <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
-          <div class="date">Monday 20 January 2020</div>
-        </div>
-
-        <div class="weather-box">
-          <div class="temp">9°c</div>
-          <div class="weather">Rain</div>
-        </div>
-      </div>
-    </main>
+      <header class="localisation-info" v-if="searchResult">
+        <h1>{{weather.cityName}}</h1>
+        <p> {{weather.country}}</p>
+      </header>
+      <section class="details" v-if="searchResult">
+        <h2>{{weather.temperature}}°C</h2>
+        <p>{{weather.description}}</p>
+      </section>
+  </div>
   </div>
 </template>
+
 
 <script>
 
 export default {
   name: 'App',
   data() {
-    return {
-      api_key : '6a2b7fb3a578da8807be5ec2b0ba102a',
-      url_base: 'api.openweathermap.org/data/2.5/',
-      query: '',
-      weather: {},
+      return {
+        isDay: true,
+        searchResult: false,
+        cityDisplay: false,
+        citySearch: "",
+        weather: {
+        cityName : "Bordeaux",
+        country:"FR",
+        temperature : 9,
+        description : "Cloudy with a chance of meatballs",
+      },
     }
-  },
-  methods: {
-    fetchWeather (e){
-      if (e.key == "Enter") {
-        async function () {
+  },  
+    methods: {
+    getWeather: async function() {
       console.log(this.citySearch);
-      const key = "xxxxxxxxxxxxxxxxxxx";
+      const key = "ec80fe5c759a7923eb1c40f97cf4d4bf";
       const callURL = `http://api.openweathermap.org/data/2.5/weather?q=${this.citySearch}&appid=${key}&units=metric`;
-      //? Appel à l'API avec un await
+      //? APPEL A l'API avec un await dans un try 
+      try {
         const response = await fetch(callURL);
-        const data = await response.json(response);
+        const data = await response.json();
+        console.log(data);
+        this.citySearch = "";
+        this.weather.cityName = data.name; 
+        this.weather.country = data.sys.country;
+        this.weather.temperature = Math.round(data.main.temp);
+        this.weather.description = data.weather[0].description;
+        this.searchResult = true;
+        //check if it's daytime or nighttime or
+        const dayNight = data.weather[0].icon;
+        if(dayNight.includes("d")){
+          this.isDay = true;
+        }
+        else{
+          this.isDay = false;
+        }
+      } catch (error) {
+        console.log(error)
       }
-    },
-    setResults (results) {
-      this.weather = results;
     }
   }
 }
+
 </script>
 
 <style>
