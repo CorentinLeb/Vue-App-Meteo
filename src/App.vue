@@ -17,7 +17,6 @@
 
       <div class="location-box">
           <h1 class="location">{{weather.cityName}}</h1>
-          <p> {{weather.country}}</p>
         <div class="weather-box">
           <h2 class="temp">{{weather.temperature}}°C</h2>
           <p class="weather">{{weather.description}}</p>
@@ -40,7 +39,6 @@ export default {
         citySearch: "",
         weather: {
         cityName : "Bordeaux",
-        country:"FR",
         temperature : 9,
         description : "Cloudy with a chance of meatballs",
       },
@@ -57,8 +55,7 @@ export default {
         const data = await response.json();
         console.log(data);
         this.citySearch = "";
-        this.weather.cityName = data.name; 
-        this.weather.country = data.sys.country;
+        this.weather.cityName = data.name;
         this.weather.temperature = Math.round(data.main.temp);
         this.weather.description = data.weather[0].description;
         this.searchResult = true;
